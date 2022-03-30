@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PMT Calculator</title>
+    <link rel="stylesheet" href="./css/pmt.css">
+</head>
+<body>
+    <script>
+            function PMT(taza, periodo, monto, valorFuturo, tipo) {
+
+            let pmt, montoSi;
+
+            valorFuturo || (valorFuturo = 0);
+            tipo || (tipo = 0);
+
+            if (taza === 0)
+                return -(monto + valorFuturo)/periodo;
+
+            montoSi = Math.pow(1 + taza, periodo);
+            pmt = - taza * (monto * montoSi + valorFuturo) / (montoSi - 1);
+
+            if (tipo === 1)
+                pmt /= (1 + taza);
+
+            return pmt;
+        }
+
+        function calcular(){
+             let tazaQ,taza,periodo,monto,futuro,tipo,interes,prima,montototal
+
+             futuro = 0
+             tipo = 0
+
+             interes = document.getElementById('txtInteres').value
+             periodo = document.getElementById('txtMeses').value
+             prima = document.getElementById('txtPrima').value
+             montototal = document.getElementById('txtValorVivienda').value
+
+             taza = ((interes/100)/12)
+             tazaQ = ((9/100)/12)
+             monto = montototal - prima
+
+             let resultado = PMT(taza,periodo,monto,futuro,tipo)
+             let resultadoQ = PMT(tazaQ,periodo,monto,futuro,tipo)
+
+             document.getElementById('txtResultado').value = Math.abs(resultado.toFixed(2))
+             document.getElementById('txtResultadoQ').value = Math.abs(resultadoQ.toFixed(2))
+        }
+    </script>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-lg-4">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Calculo de Cuota de Vivienda</a>
+    </div>
+</nav>
+<div class="container">
+    <div class="card align-items-center">
+            <div class="form-floating mt-3 mb-3">
+                <input type="number" class="form-control" name="txtInteres" id="txtInteres">
+                <label for="txtResultadoQ">% Intereses</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="number" class="form-control" name="txtMeses" id="txtMeses">
+                <label for="txtResultadoQ">Meses Plazo</label>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">$</span>
+                <input type="number" class="form-control" name="txtPrima" id="txtPrima" placeholder="Prima...">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">$</span>
+                <input type="number" class="form-control" name="txtValorVivienda" id="txtValorVivienda" placeholder="Valor Total de la vivienda...">
+            </div>
+
+            <button type="button" class="form-control btn btn-primary" onclick='calcular()'>Calcular Cuota</button><br>
+
+            <div class="form-floating mb-3">
+                <input type="number" class="form-control text-center" name="txtResultado" id="txtResultado" readonly>
+                <label for="txtResultado">Cuota Normal:</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="number" class="form-control text-center" name="txtResultado" id="txtResultadoQ" readonly>
+                <label for="txtResultadoQ">Cuota de Quiebre:</label>
+            </div>        
+    </div>
+</div>
+</body>
+</html>

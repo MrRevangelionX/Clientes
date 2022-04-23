@@ -8,48 +8,6 @@
     <link rel="stylesheet" href="./css/pmt.css">
 </head>
 <body>
-    <script>
-            function PMT(taza, periodo, monto, valorFuturo, tipo) {
-
-            let pmt, montoSi;
-
-            valorFuturo || (valorFuturo = 0);
-            tipo || (tipo = 0);
-
-            if (taza === 0)
-                return -(monto + valorFuturo)/periodo;
-
-            montoSi = Math.pow(1 + taza, periodo);
-            pmt = - taza * (monto * montoSi + valorFuturo) / (montoSi - 1);
-
-            if (tipo === 1)
-                pmt /= (1 + taza);
-
-            return pmt;
-        }
-
-        function calcular(){
-             let tazaQ,taza,periodo,monto,futuro,tipo,interes,prima,montototal
-
-             futuro = 0
-             tipo = 0
-
-             interes = document.getElementById('txtInteres').value
-             periodo = document.getElementById('txtMeses').value
-             prima = document.getElementById('txtPrima').value
-             montototal = document.getElementById('txtValorVivienda').value
-
-             taza = ((interes/100)/12)
-             tazaQ = ((9/100)/12)
-             monto = montototal - prima
-
-             let resultado = PMT(taza,periodo,monto,futuro,tipo)
-             let resultadoQ = PMT(tazaQ,periodo,monto,futuro,tipo)
-
-             document.getElementById('txtResultado').value = Math.abs(resultado.toFixed(2))
-             document.getElementById('txtResultadoQ').value = Math.abs(resultadoQ.toFixed(2))
-        }
-    </script>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-lg-4">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">Calculo de Cuota de Vivienda</a>
@@ -85,6 +43,8 @@
                 <label for="txtResultadoQ">Cuota de Quiebre:</label>
             </div>        
     </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="./js/pmt.js"></script>
 </div>
 </body>
 </html>
